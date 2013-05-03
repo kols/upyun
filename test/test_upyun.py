@@ -2,6 +2,8 @@ import os.path
 import unittest
 from urllib import pathname2url
 
+import pytest
+
 from upyun import const, UpYun
 
 
@@ -41,6 +43,11 @@ class UpYunTestCase(unittest.TestCase):
     def tearDown(self):
         self.test_file_txt.close()
         self.test_file_img.close()
+        self._delete(self.REMOTE_PATH_TXT_FILE, self.client_file)
+        self._delete(self.REMOTE_PATH_IMG_FILE, self.client_file)
+        self._delete(self.REMOTE_PATH_IMG_FILE, self.client_image)
+        self._delete(self.REMOTE_DIR, self.client_image)
+        self._delete(self.REMOTE_DIR, self.client_file)
 
     def _put_file(self):
         return self.client_file.put(
@@ -49,6 +56,13 @@ class UpYunTestCase(unittest.TestCase):
     def _put_image(self, client=None):
         client = client or self.client_image
         return client.put(self.REMOTE_PATH_IMG_FILE, self.test_file_img)
+
+    def _mkdir(self, mk_parent=True, client=None):
+        client = client or self.client_file
+        return client.mkdir(self.REMOTE_DIR, mk_parent)
+
+    def _delete(self, path, client):
+        return client.delete(path)
 
     def test_put_file_space_file(self):
         resp = self._put_file()
@@ -87,8 +101,9 @@ class UpYunTestCase(unittest.TestCase):
         self.assertEqual(resp.data, self.test_file_txt.read())
 
     def test_get_binary_file(self):
-        self._put_image()
-        resp = self.client_file.get(self.REMOTE_PATH_IMG_FILE)
+        client = self.client_image
+        self._put_image(client)
+        resp = client.get(self.REMOTE_PATH_IMG_FILE)
         self.assertTrue(resp.success)
         self.test_file_img.seek(0)
         self.assertEqual(resp.data, self.test_file_img.read())
@@ -102,6 +117,10 @@ class UpYunTestCase(unittest.TestCase):
         remote_file_paths = map(lambda f: f.path, resp.files.itervalues())
         self.assertTrue(self.REMOTE_PATH_TXT_FILE in remote_file_paths)
         self.assertTrue(self.REMOTE_PATH_IMG_FILE in remote_file_paths)
+
+    def test_mkdir(self):
+        resp = self._mkdir()
+        self.assertTrue(resp.success)
 
 if __name__ == '__main__':
     unittest.main()
