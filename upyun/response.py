@@ -28,8 +28,15 @@ class ResponseBase(object):
         #: Whether the API request is successful
         self.success = self.response.status_code == requests.codes.ok
 
+        #: (Optional) Error of the request
+        self.error = self._populate_error()
+
     def _get_header_with_prefix(self, name):
         return self.response.headers.get(const.UPYUN_HEADER_PREFIX + name)
+
+    def _populate_error(self):
+        if not self.success:
+            return (self.response.status_code, self.response.content.strip())
 
 
 class UploadedImageInfoMixin(object):
@@ -71,7 +78,8 @@ class FileInfoMixin(object):
 
         :rtype: datetime.datetime
         """
-        return self._get_header_with_prefix('date')
+        return datetime.utcfromtimestamp(
+                int(self._get_header_with_prefix('date')))
 
     @property
     def size(self):

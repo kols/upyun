@@ -59,15 +59,10 @@ class UpYun(object):
             raise
 
     def _prepare_session(self, auth, ssl):
-        def raise_error(r, *args, **kwargs):
-            if r.status_code != requests.codes.ok:
-                raise Exception(r.text)
-
         if not ssl:
             self._auth = UpYunDigestAuthentication(*auth)
         s = requests.Session()
         s.auth = self._auth
-        s.hooks = {'response': raise_error}
         return s
 
     def _get_file_url(self, path):
@@ -223,4 +218,3 @@ class UpYun(object):
         """
         resp = self.session.head(self._get_url(path))
         return response.FileInfoResponse(resp, self._get_file_url(path))
-
