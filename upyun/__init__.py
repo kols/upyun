@@ -1,5 +1,6 @@
 import hashlib
 import os.path
+from urllib import pathname2url
 from urlparse import urljoin
 
 import requests
@@ -9,7 +10,20 @@ from .auth import UpYunDigestAuthentication
 
 
 class UpYun(object):
-    """Feature complete UpYun REST client"""
+    """Feature complete UpYun REST client
+
+    :param str bucket: Your bucket
+    :param stype: The space type, see :ref:`const.rst`
+    :param api_host: API host to use, see :ref:`const.rst`
+    :param tuple auth: Username, passwd tuple
+    :param str domain: Your custom domain
+    :param ssl: Whether to use SSL, only a *stub* for now
+
+    Usage::
+
+        client = UpYun('test', const.SPACE_TYPE_FILE, const.API_HOST_AUTO, ('user', 'pass'))
+        client.put('/test.txt', open('/tmp/test.txt'))
+    """
     def __init__(self, bucket, stype, api_host, auth, domain=None, ssl=False):
         self.bucket = bucket
         self.stype = stype
@@ -18,6 +32,8 @@ class UpYun(object):
         self._base_url = proto + const.UPAIYUN_API_HOSTS[self.api_host]
         self.domain = domain or (const.BUCKET_DOMAIN % bucket)
         self._bucket_base_url = proto + self.domain
+
+        #: The :class:`requests.Session` object to use for the API requests
         self.session = self._prepare_session(auth, ssl)
 
     @property
@@ -43,7 +59,7 @@ class UpYun(object):
             raise
 
     def _prepare_session(self, auth, ssl):
-        def raise_error(r):
+        def raise_error(r, *args, **kwargs):
             if r.status_code != requests.codes.ok:
                 raise Exception(r.text)
 
@@ -59,7 +75,7 @@ class UpYun(object):
 
     def _get_url(self, path):
         return urljoin(self._base_url,
-                os.path.join(self.bucket, path.lstrip('/')))
+                pathname2url(os.path.join(self.bucket, path.lstrip('/'))))
 
     def _get_data(self, fileo):
         try:
@@ -137,7 +153,7 @@ class UpYun(object):
         if ttype:
             if ttype not in const.THUMB_TYPES:
                 raise Exception('put: invalid thumbnail type')
-            headers[const.HEADER_THUMB_TYPE] = ttype
+            headers[const.HEADER_THUMB_TYPE] = const.THUMB_TYPES[ttype]
             if res:
                 if ttype in (const.THUMB_TYPE_FIX_BOTH,
                         const.THUMB_TYPE_FIX_WIDTH_OR_HEIGHT):

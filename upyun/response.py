@@ -7,17 +7,15 @@ class ResponseBase(object):
     """A response of successfully uploading image, contains extra info
     of the uploaded image
 
-    :ivar response: Response from UpYun
+    :param response: Response from UpYun
     :type response: :class:`requests.Response`
-    :ivar url: URL of the file on the UpYun
+    :param str url: URL of the file on the UpYun
     """
     def __init__(self, response, url):
-        """
-        :param response: Response from UpYun
-        :type response: :class:`requests.Response`
-        :param string url: URL of the file on the UpYun
-        """
+        #: Response from UpYun
         self.response = response
+
+        #: URL of the file on the UpYun
         self.url = url
 
     def _get_header_with_prefix(self, name):

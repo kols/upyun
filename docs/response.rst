@@ -3,40 +3,38 @@
 Responses
 =========
 
+.. module:: upyun.response
+
 
 Response
 --------
 
-.. autoclass:: upyun.response.ResponseBase
+.. autoclass:: ResponseBase
    :members:
+   :undoc-members:
    :private-members:
-.. autoclass:: upyun.response.Response
+.. autoclass:: Response
    :show-inheritance:
-   :inherited-members:
-.. autoclass:: upyun.response.UploadedImageResponse
+.. autoclass:: UploadedImageResponse
    :show-inheritance:
-   :inherited-members:
-.. autoclass:: upyun.response.FileInfoResponse
+.. autoclass:: FileInfoResponse
    :show-inheritance:
-   :inherited-members:
-.. autoclass:: upyun.response.UsageResponse
+.. autoclass:: UsageResponse
    :show-inheritance:
-   :inherited-members:
-.. autoclass:: upyun.response.GetResponse
+.. autoclass:: GetResponse
    :show-inheritance:
-   :inherited-members:
 
 
 Mixin
 -----
 
-.. autoclass:: upyun.response.UploadedImageInfoMixin
+.. autoclass:: UploadedImageInfoMixin
    :members:
-.. autoclass:: upyun.response.FileInfoMixin
+.. autoclass:: FileInfoMixin
    :members:
-.. autoclass:: upyun.response.UsageMixin
+.. autoclass:: UsageMixin
    :members:
-.. autoclass:: upyun.response.FileTypeMixin
+.. autoclass:: FileTypeMixin
    :members:
-.. autoclass:: upyun.response.GetMixin
+.. autoclass:: GetMixin
    :members:

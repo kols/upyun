@@ -2,8 +2,9 @@ UpYun Client
 =========================
 
 
-.. automodule:: upyun
+.. module:: upyun
+
+.. autoclass:: UpYun
    :members:
    :undoc-members:
    :private-members:
-   :special-members:
