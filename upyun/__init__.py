@@ -204,9 +204,9 @@ class UpYun(object):
         resp = self.session.post(url, headers=headers)
         return response.Response(resp, self._get_file_url(dirname))
 
-    def ls(self, dirname):
-        pass
-    dir = ls
+    def ls(self, path):
+        resp = self.session.get(self._get_url(path))
+        return response.LsResponse(resp, self._get_file_url(path))
 
     def usage(self):
         """Retrieve the space usage info

@@ -39,3 +39,6 @@ THUMB_TYPES = {
         THUMB_TYPE_SQUARE: 'square',
         THUMB_TYPE_FIX_BOTH: 'fix_both',
         }
+
+FILE_TYPE_FILE = 1
+FILE_TYPE_FOLDER = 2

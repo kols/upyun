@@ -1,3 +1,10 @@
+from collections import namedtuple
+import copy
+import os.path
+import urllib
+import urlparse
+from datetime import datetime
+
 import requests
 
 from upyun import const
@@ -106,6 +113,58 @@ class GetMixin(object):
         return self.response.content
 
 
+class LsMixin(object):
+    TYPE_FILE = 'N'
+    TYPE_FOLDER = 'F'
+
+    _fields = ['name', 'path', 'url', 'type', 'size', 'mtime']
+    File = namedtuple('File', _fields)
+    Folder = namedtuple('Folder', _fields)
+
+    def _parse_content(self):
+        self._files = {}
+        self._folders = {}
+
+        for l in self.response.content.strip().split("\n"):
+            name, type, size, mtime = l.strip().split()
+
+            type = type.upper()
+            url_parsed = urlparse.urlparse(self.url)
+            folder_path = url_parsed.path
+
+            path = urllib.pathname2url(os.path.join(folder_path, name))
+            url = urlparse.urljoin(
+                    (url_parsed.scheme + '://' + url_parsed.netloc), path)
+            mtime = datetime.utcfromtimestamp(int(mtime))
+
+            if type == self.TYPE_FILE:
+                f = self.File(name=name, path=path, url=url,
+                        type=const.FILE_TYPE_FILE, size=int(size), mtime=mtime)
+                self._files[name] = f
+            elif type == self.TYPE_FOLDER:
+                f = self.File(name=name, path=path, url=url,
+                        type=const.FILE_TYPE_FILE, size=int(size), mtime=mtime)
+                self._folders[name] = f
+
+    @property
+    def files(self):
+        if not hasattr(self, '_files'):
+            self._parse_content()
+        return self._files
+
+    @property
+    def folders(self):
+        if not hasattr(self, '_folders'):
+            self._parse_content()
+        return self._folders
+
+    @property
+    def stuff(self):
+        stuff = copy.deepcopy(self.files)
+        stuff.update(self.folders)
+        return stuff
+
+
 class UploadedImageResponse(ResponseBase, UploadedImageInfoMixin,
         FileTypeMixin):
     pass
@@ -120,6 +179,10 @@ class UsageResponse(ResponseBase, UsageMixin):
 
 
 class GetResponse(ResponseBase, GetMixin):
+    pass
+
+
+class LsResponse(ResponseBase, LsMixin):
     pass
 
 
