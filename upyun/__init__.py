@@ -188,8 +188,6 @@ class UpYun(object):
         """
         resp = self.session.delete(self._get_url(path))
         return response.Response(resp, None)
-    rm = delete
-    rmdir = delete  # only empty folder can be deleted
 
     def mkdir(self, dirname, mk_parent=True):
         """Create a folder on server

@@ -18,17 +18,11 @@ class ResponseBase(object):
         #: URL of the file on the UpYun
         self.url = url
 
+        #: Whether the API request is successful
+        self.success = self.response.status_code == requests.codes.ok
+
     def _get_header_with_prefix(self, name):
         return self.response.headers.get(const.UPYUN_HEADER_PREFIX + name)
-
-    @property
-    def success(self):
-        """
-        Whether the request is successful
-
-        :rtype: bool
-        """
-        return self.response.status_code == requests.codes.ok
 
 
 class UploadedImageInfoMixin(object):
