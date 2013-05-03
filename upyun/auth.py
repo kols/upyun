@@ -17,11 +17,11 @@ class UpYunDigestAuthentication(AuthBase):
             return int(r.headers['content-length'])
         try:
             return len(r.body)
-        except AttributeError:
+        except (AttributeError, TypeError):
             pass
         try:
             return len(r.data)
-        except AttributeError:
+        except (AttributeError, TypeError):
             pass
         return 0
 
