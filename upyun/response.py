@@ -32,7 +32,7 @@ class ResponseBase(object):
         self.error = self._populate_error()
 
     def _get_header_with_prefix(self, name):
-        return self.response.headers.get(const.UPYUN_HEADER_PREFIX + name)
+        return self.response.headers.get(const.HEADER_UPYUN_PREFIX + name)
 
     def _populate_error(self):
         if not self.success:
@@ -78,8 +78,8 @@ class FileInfoMixin(object):
 
         :rtype: datetime.datetime
         """
-        return datetime.utcfromtimestamp(
-                int(self._get_header_with_prefix('date')))
+        d = self._get_header_with_prefix('file-date')
+        return datetime.utcfromtimestamp(int(d)) if d else None
 
     @property
     def size(self):
@@ -87,7 +87,7 @@ class FileInfoMixin(object):
 
         :rtype: int or None
         """
-        s = self._get_header_with_prefix('size')
+        s = self._get_header_with_prefix('file-size')
         return int(s) if s else None
 
 
@@ -108,7 +108,13 @@ class FileTypeMixin(object):
 
         :return: one of ['file', 'folder']
         """
-        return self._get_header_with_prefix('type')
+        ft = self._get_header_with_prefix('file-type')
+        if ft:
+            ft = ft.lower()
+            if ft == 'file':
+                return const.FILE_TYPE_FILE
+            elif ft == 'folder':
+                return const.FILE_TYPE_FOLDER
 
 
 class GetMixin(object):
