@@ -1,3 +1,4 @@
+import datetime
 import os.path
 import unittest
 from urllib import pathname2url
@@ -121,6 +122,26 @@ class UpYunTestCase(unittest.TestCase):
     def test_mkdir(self):
         resp = self._mkdir()
         self.assertTrue(resp.success)
+
+    def test_usage(self):
+        resp = self.client_file.usage()
+        self.assertTrue(resp.success)
+        self.assertTrue(isinstance(resp.usage, int))
+        resp = self.client_image.usage()
+        self.assertTrue(resp.success)
+        self.assertTrue(isinstance(resp.usage, int))
+
+    def test_info(self):
+        self._put_file()
+        resp = self.client_file.info(self.REMOTE_PATH_TXT_FILE)
+        self.assertTrue(resp.success)
+        self.assertTrue(isinstance(resp.size, int))
+        self.assertTrue(isinstance(resp.date, datetime.datetime))
+        self._put_image()
+        resp = self.client_image.info(self.REMOTE_PATH_IMG_FILE)
+        self.assertTrue(resp.success)
+        self.assertTrue(isinstance(resp.size, int))
+        self.assertTrue(isinstance(resp.date, datetime.datetime))
 
 if __name__ == '__main__':
     unittest.main()
