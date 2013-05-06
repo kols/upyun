@@ -67,81 +67,83 @@ class UpYunTestCase(unittest.TestCase):
 
     def test_put_file_space_file(self):
         resp = self._put_file()
-        self.assertTrue(resp.success)
+        assert resp.success
 
     def test_put_file_space_image(self):
         resp = self._put_image(self.client_file)
-        self.assertTrue(resp.success)
+        assert resp.success
 
     def test_put_image_space_image(self):
         resp = self._put_image(self.client_image)
-        self.assertTrue(resp.success)
+        assert resp.success
 
     def test_put_thumbnail_version(self):
         resp = self.client_image.put_thumbnail(self.REMOTE_PATH_IMG_FILE,
                 self.test_file_img, self.THUMB_VERSION)
-        self.assertTrue(resp.success)
+        assert resp.success
 
     def test_put_thumbnail_version_modified(self):
         resp = self.client_image.put_thumbnail(self.REMOTE_PATH_IMG_FILE,
                 self.test_file_img, self.THUMB_VERSION,
                 const.THUMB_TYPE_FIX_MAX, (10,), 100, True)
-        self.assertTrue(resp.success)
+        assert resp.success
 
     def test_put_thumbnail_custom(self):
         resp = self.client_image.put_thumbnail(self.REMOTE_PATH_IMG_FILE,
                 self.test_file_img, ttype=const.THUMB_TYPE_FIX_MAX, res=(10,),
                 quality=100, sharpen=True)
-        self.assertTrue(resp.success)
+        assert resp.success
 
     def test_get_text_file(self):
         self._put_file()
         resp = self.client_file.get(self.REMOTE_PATH_TXT_FILE)
-        self.assertTrue(resp.success)
+        assert resp.success
         self.test_file_txt.seek(0)
-        self.assertEqual(resp.data, self.test_file_txt.read())
+        assert resp.data == self.test_file_txt.read()
 
     def test_get_binary_file(self):
         client = self.client_image
         self._put_image(client)
         resp = client.get(self.REMOTE_PATH_IMG_FILE)
-        self.assertTrue(resp.success)
+        assert resp.success
         self.test_file_img.seek(0)
-        self.assertEqual(resp.data, self.test_file_img.read())
+        assert resp.data == self.test_file_img.read()
 
     def test_ls(self):
         client = self.client_file
         self._put_file()
         self._put_image(client)
         resp = client.ls(self.REMOTE_DIR)
-        self.assertTrue(resp.success)
+        assert resp.success
         remote_file_paths = map(lambda f: f.path, resp.files.itervalues())
-        self.assertTrue(self.REMOTE_PATH_TXT_FILE in remote_file_paths)
-        self.assertTrue(self.REMOTE_PATH_IMG_FILE in remote_file_paths)
+        assert self.REMOTE_PATH_TXT_FILE in remote_file_paths
+        assert self.REMOTE_PATH_IMG_FILE in remote_file_paths
 
     def test_mkdir(self):
         resp = self._mkdir()
-        self.assertTrue(resp.success)
+        assert resp.success
 
     def test_usage(self):
         resp = self.client_file.usage()
-        self.assertTrue(resp.success)
-        self.assertTrue(isinstance(resp.usage, int))
+        assert resp.success
+        assert isinstance(resp.usage, int)
         resp = self.client_image.usage()
-        self.assertTrue(resp.success)
-        self.assertTrue(isinstance(resp.usage, int))
+        assert resp.success
+        assert isinstance(resp.usage, int)
 
     def test_info(self):
+        def _assert(resp):
+            assert resp.success
+            assert isinstance(resp.size, int)
+            assert isinstance(resp.date, datetime.datetime)
+            assert resp.type == const.FILE_TYPE_FILE
+
         self._put_file()
         resp = self.client_file.info(self.REMOTE_PATH_TXT_FILE)
-        self.assertTrue(resp.success)
-        self.assertTrue(isinstance(resp.size, int))
-        self.assertTrue(isinstance(resp.date, datetime.datetime))
+        _assert(resp)
         self._put_image()
         resp = self.client_image.info(self.REMOTE_PATH_IMG_FILE)
-        self.assertTrue(resp.success)
-        self.assertTrue(isinstance(resp.size, int))
-        self.assertTrue(isinstance(resp.date, datetime.datetime))
+        _assert(resp)
 
 if __name__ == '__main__':
     unittest.main()
