@@ -25,9 +25,6 @@ class ResponseBase(object):
         #: URL of the file on the UpYun
         self.url = url
 
-        #: Whether the API request is successful
-        self.success = self.response.status_code == requests.codes.ok
-
         #: (Optional) Error of the request
         self.error = self._populate_error()
 
@@ -38,8 +35,13 @@ class ResponseBase(object):
         if not self.success:
             return (self.response.status_code, self.response.content.strip())
 
+    @property
+    def success(self):
+        """Whether the API request is successful"""
+        return self.response.status_code == requests.codes.ok
 
-class UploadedImageInfoMixin(object):
+
+class ImageInfoMixin(object):
     @property
     def width(self):
         """
@@ -98,7 +100,7 @@ class UsageMixin(object):
 
         :rtype: int
         """
-        return int(self.response.text)
+        return int(self.response.text) if self.response.text else None
 
 
 class FileTypeMixin(object):
@@ -135,7 +137,7 @@ class LsMixin(object):
     File = namedtuple('File', _fields)
     Folder = namedtuple('Folder', _fields)
 
-    def _parse_content(self):
+    def _parse_response(self):
         self._files = {}
         self._folders = {}
 
@@ -163,13 +165,13 @@ class LsMixin(object):
     @property
     def files(self):
         if not hasattr(self, '_files'):
-            self._parse_content()
+            self._parse_response()
         return self._files
 
     @property
     def folders(self):
         if not hasattr(self, '_folders'):
-            self._parse_content()
+            self._parse_response()
         return self._folders
 
     @property
@@ -179,8 +181,7 @@ class LsMixin(object):
         return stuff
 
 
-class UploadedImageResponse(ResponseBase, UploadedImageInfoMixin,
-        FileTypeMixin):
+class UploadedImageResponse(ResponseBase, ImageInfoMixin, FileTypeMixin):
     pass
 
 

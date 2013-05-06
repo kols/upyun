@@ -208,7 +208,7 @@ class UpYun(object):
 
         :return: :class:`~response.UsageResponse`
         """
-        resp = self.session.get(self._get_url('?usage'))
+        resp = self.session.get(self._get_url(''), params='usage')
         return response.UsageResponse(resp, None)
 
     def info(self, path):

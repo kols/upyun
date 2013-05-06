@@ -28,7 +28,7 @@ Response
 Mixin
 -----
 
-.. autoclass:: UploadedImageInfoMixin
+.. autoclass:: ImageInfoMixin
    :members:
 .. autoclass:: FileInfoMixin
    :members:
