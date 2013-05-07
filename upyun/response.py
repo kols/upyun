@@ -109,7 +109,8 @@ class FileTypeMixin(object):
     def type(self):
         """File type of the queried path
 
-        :const:`~const.FILE_TYPE_FILE` or :const:`~const.FILE_TYPE_FOLDER`
+        :const:`~upyun.const.FILE_TYPE_FILE` or
+        :const:`~upyun.const.FILE_TYPE_FOLDER`
         """
         ft = self._get_header_with_prefix('file-type')
         if ft:
@@ -164,7 +165,8 @@ class LsMixin(object):
     def files(self):
         """Files in the directory
 
-        Key is the file name, value is :class:`~LsMixin.Folder`
+        Key is the file name, value is
+        :class:`~upyun.response.LsMixin.Folder`
 
         :rtype: :class:`dict`
         """
@@ -176,7 +178,8 @@ class LsMixin(object):
     def folders(self):
         """Folders in the directory
 
-        Key is the folder name, value is :class:`~LsMixin.File`
+        Key is the folder name, value is
+        :class:`~upyun.response.LsMixin.File`
 
         :rtype: :class:`dict`
         """
@@ -189,7 +192,8 @@ class LsMixin(object):
         """All the stuffs in the directory
 
         Key is file or folder name, value is
-        :class:`~LsMixin.Folder` or :class:`~LsMixin.File`
+        :class:`~upyun.response.LsMixin.Folder` or
+        :class:`~upyun.response.LsMixin.File`
 
         :rtype: :class:`dict`
         """

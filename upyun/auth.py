@@ -5,7 +5,11 @@ from requests.auth import AuthBase
 
 
 class UpYunDigestAuthentication(AuthBase):
-    """UpYun signature digest authentication implemented for requests"""
+    """UpYun signature digest authentication implemented for `requests`
+
+    :param str user: Username
+    :param str passwd: Password
+    """
     AUTH_STR = 'UpYun'
 
     def __init__(self, user, passwd):

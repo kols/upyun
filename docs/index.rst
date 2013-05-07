@@ -13,6 +13,7 @@ Contents:
 
    client
    response
+   auth
    const
 
 .. seealso::
