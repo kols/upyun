@@ -11,10 +11,13 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   upyun.rst
-   response.rst
+   client
+   response
    const
 
+.. seealso::
+   `又拍云存储 API 操作文档 v1.5（PDF）
+   <http://static.b0.upaiyun.com/upyun_api_doc.pdf>`_
 
 
 Indices and tables
