@@ -150,5 +150,13 @@ class UpYunTestCase(unittest.TestCase):
         resp = self.client_image.info(self.REMOTE_PATH_IMG_FILE)
         _assert(resp)
 
+    def test_delete(self):
+        self._put_file()
+        resp = self.client_file.delete(self.REMOTE_PATH_TXT_FILE)
+        assert resp.success, resp.error
+        self._put_image()
+        resp = self.client_image.delete(self.REMOTE_PATH_IMG_FILE)
+        assert resp.success, resp.error
+
 if __name__ == '__main__':
     unittest.main()
