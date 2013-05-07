@@ -45,7 +45,7 @@ Mixin
    .. autoattribute:: files
    .. autoattribute:: folders
    .. autoattribute:: stuffs
-   .. class:: upyun.response.LsMixin.File
+   .. class:: upyun.response.LsMixin.FileInfo
 
       A namedtuple reprenting the file info
 
@@ -61,34 +61,11 @@ Mixin
             File URL
 
          ``type``
-            :const:`~upyun.const.FILE_TYPE_FILE`
-
-         ``size``
-            File size
-
-         ``mtimt``
-            Last modified time
-
-   .. class:: upyun.response.LsMixin.Folder
-
-      A namedtuple reprenting the folder info
-
-      `Fields`:
-
-         ``name``
-            Folder name
-
-         ``path``
-            Folder path
-
-         ``url``
-            Folder URL
-
-         ``type``
+            :const:`~upyun.const.FILE_TYPE_FILE` or
             :const:`~upyun.const.FILE_TYPE_FOLDER`
 
          ``size``
-            Folder size
+            File size
 
          ``mtimt``
             Last modified time

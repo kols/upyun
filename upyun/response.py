@@ -1,9 +1,8 @@
 from collections import namedtuple
-import copy
+from datetime import datetime
 import os.path
 import urllib
 import urlparse
-from datetime import datetime
 
 import requests
 
@@ -132,9 +131,8 @@ class LsMixin(object):
     TYPE_FILE_STR = 'N'
     TYPE_FOLDER_STR = 'F'
 
-    _fields = ['name', 'path', 'url', 'type', 'size', 'mtime']
-    File = namedtuple('File', _fields)
-    Folder = namedtuple('Folder', _fields)
+    FileInfo = namedtuple('FileInfo',
+            ['name', 'path', 'url', 'type', 'size', 'mtime'])
 
     def _parse_response(self):
         self._files = {}
@@ -153,12 +151,12 @@ class LsMixin(object):
             mtime = datetime.utcfromtimestamp(int(mtime))
 
             if type == self.TYPE_FILE_STR:
-                f = self.File(name=name, path=path, url=url,
+                f = self.FileInfo(name=name, path=path, url=url,
                         type=const.FILE_TYPE_FILE, size=int(size), mtime=mtime)
                 self._files[name] = f
             elif type == self.TYPE_FOLDER_STR:
-                f = self.File(name=name, path=path, url=url,
-                        type=const.FILE_TYPE_FILE, size=int(size), mtime=mtime)
+                f = self.FileInfo(name=name, path=path, url=url,
+                        type=const.FILE_TYPE_FOLDER, size=int(size), mtime=mtime)
                 self._folders[name] = f
 
     @property
@@ -166,7 +164,7 @@ class LsMixin(object):
         """Files in the directory
 
         Key is the file name, value is
-        :class:`~upyun.response.LsMixin.Folder`
+        :class:`~upyun.response.LsMixin.FileInfo`
 
         :rtype: :class:`dict`
         """
@@ -179,7 +177,7 @@ class LsMixin(object):
         """Folders in the directory
 
         Key is the folder name, value is
-        :class:`~upyun.response.LsMixin.File`
+        :class:`~upyun.response.LsMixin.FileInfo`
 
         :rtype: :class:`dict`
         """
@@ -192,13 +190,13 @@ class LsMixin(object):
         """All the stuffs in the directory
 
         Key is file or folder name, value is
-        :class:`~upyun.response.LsMixin.Folder` or
-        :class:`~upyun.response.LsMixin.File`
+        :class:`~upyun.response.LsMixin.FileInfo`
 
         :rtype: :class:`dict`
         """
-        stuff = copy.deepcopy(self.files)
-        stuff.update(self.folders)
+        stuffs = {}
+        stuffs.update(self.files)
+        stuffs.update(self.folders)
         return stuff
 
 
