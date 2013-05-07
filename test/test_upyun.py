@@ -67,15 +67,15 @@ class UpYunTestCase(unittest.TestCase):
 
     def test_put_file_space_file(self):
         resp = self._put_file()
-        assert resp.success
+        assert resp.success, resp.error
 
     def test_put_file_space_image(self):
         resp = self._put_image(self.client_file)
-        assert resp.success
+        assert resp.success, resp.error
 
     def test_put_image_space_image(self):
         resp = self._put_image(self.client_image)
-        assert resp.success
+        assert resp.success, resp.error
         assert isinstance(resp.frames, int)
         assert isinstance(resp.height, int)
         assert resp.height > 0
@@ -85,24 +85,24 @@ class UpYunTestCase(unittest.TestCase):
     def test_put_thumbnail_version(self):
         resp = self.client_image.put_thumbnail(self.REMOTE_PATH_IMG_FILE,
                 self.test_file_img, self.THUMB_VERSION)
-        assert resp.success
+        assert resp.success, resp.error
 
     def test_put_thumbnail_version_modified(self):
         resp = self.client_image.put_thumbnail(self.REMOTE_PATH_IMG_FILE,
                 self.test_file_img, self.THUMB_VERSION,
                 const.THUMB_TYPE_FIX_MAX, (10,), 100, True)
-        assert resp.success
+        assert resp.success, resp.error
 
     def test_put_thumbnail_custom(self):
         resp = self.client_image.put_thumbnail(self.REMOTE_PATH_IMG_FILE,
                 self.test_file_img, ttype=const.THUMB_TYPE_FIX_MAX, res=(10,),
                 quality=100, sharpen=True)
-        assert resp.success
+        assert resp.success, resp.error
 
     def test_get_text_file(self):
         self._put_file()
         resp = self.client_file.get(self.REMOTE_PATH_TXT_FILE)
-        assert resp.success
+        assert resp.success, resp.error
         self.test_file_txt.seek(0)
         assert resp.data == self.test_file_txt.read()
 
@@ -110,7 +110,7 @@ class UpYunTestCase(unittest.TestCase):
         client = self.client_image
         self._put_image(client)
         resp = client.get(self.REMOTE_PATH_IMG_FILE)
-        assert resp.success
+        assert resp.success, resp.error
         self.test_file_img.seek(0)
         assert resp.data == self.test_file_img.read()
 
@@ -119,26 +119,26 @@ class UpYunTestCase(unittest.TestCase):
         self._put_file()
         self._put_image(client)
         resp = client.ls(self.REMOTE_DIR)
-        assert resp.success
+        assert resp.success, resp.error
         remote_file_paths = map(lambda f: f.path, resp.files.itervalues())
         assert self.REMOTE_PATH_TXT_FILE in remote_file_paths
         assert self.REMOTE_PATH_IMG_FILE in remote_file_paths
 
     def test_mkdir(self):
         resp = self._mkdir()
-        assert resp.success
+        assert resp.success, resp.error
 
     def test_usage(self):
         resp = self.client_file.usage()
-        assert resp.success
+        assert resp.success, resp.error
         assert isinstance(resp.usage, int)
         resp = self.client_image.usage()
-        assert resp.success
+        assert resp.success, resp.error
         assert isinstance(resp.usage, int)
 
     def test_info(self):
         def _assert(resp):
-            assert resp.success
+            assert resp.success, resp.error
             assert isinstance(resp.size, int)
             assert isinstance(resp.date, datetime.datetime)
             assert resp.type == const.FILE_TYPE_FILE
