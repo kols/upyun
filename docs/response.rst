@@ -59,7 +59,7 @@ Mixin
             File URL
 
          ``type``
-            :const:`~const.FILE_TYPE_FILE`
+            :const:`~upyun.const.FILE_TYPE_FILE`
 
          ``size``
             File size
@@ -83,7 +83,7 @@ Mixin
             Folder URL
 
          ``type``
-            :const:`~const.FILE_TYPE_FOLDER`
+            :const:`~upyun.const.FILE_TYPE_FOLDER`
 
          ``size``
             Folder size

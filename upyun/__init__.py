@@ -15,7 +15,7 @@ class UpYun(object):
     :param str bucket: Your bucket
     :param stype: The space type, :const:`~const.SPACE_TYPE_FILE` or
                   :const:`~const.SPACE_TYPE_IMAGE`
-    :param api_host: API host to use, see :const:`~const.UPAIYUN_API_HOSTS`
+    :param api_host: API host to use, see :ref:`API Hosts <api-hosts>`
     :param tuple auth: ``(username, passwd)`` pair
     :param str domain: Your custom domain
     :param bool ssl: Whether to use SSL, only a *stub* for now
