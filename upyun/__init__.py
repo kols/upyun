@@ -200,6 +200,11 @@ class UpYun(object):
         return response.Response(resp, self._get_file_url(dirname))
 
     def ls(self, path):
+        """List contents of a folder
+
+        :param path: Path to the folder
+        :rtype: :class:`~response.LsResponse`
+        """
         resp = self.session.get(self._get_url(path))
         return response.LsResponse(resp, self._get_file_url(path))
 

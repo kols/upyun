@@ -164,18 +164,37 @@ class LsMixin(object):
 
     @property
     def files(self):
+        """Files in the directory
+
+        Key is the folder name, value is :class:`~LsMixin.Folder`
+
+        :rtype: :class:`dict`
+        """
         if not hasattr(self, '_files'):
             self._parse_response()
         return self._files
 
     @property
     def folders(self):
+        """Folders in the directory
+
+        Key is the file name, value is :class:`~LsMixin.File`
+
+        :rtype: :class:`dict`
+        """
         if not hasattr(self, '_folders'):
             self._parse_response()
         return self._folders
 
     @property
-    def stuff(self):
+    def stuffs(self):
+        """All the stuffs in the directory
+
+        Key is file or folder name, value is
+        :class:`~LsMixin.Folder` or :class:`~LsMixin.File`
+
+        :rtype: :class:`dict`
+        """
         stuff = copy.deepcopy(self.files)
         stuff.update(self.folders)
         return stuff

@@ -23,6 +23,8 @@ Response
    :show-inheritance:
 .. autoclass:: GetResponse
    :show-inheritance:
+.. autoclass:: LsResponse
+   :show-inheritance:
 
 
 Mixin
@@ -38,3 +40,53 @@ Mixin
    :members:
 .. autoclass:: GetMixin
    :members:
+.. autoclass:: LsMixin
+   :members: files, folders, stuffs
+
+   .. attribute:: File
+
+      A namedtuple reprenting the file info
+
+      `Fields`:
+
+         ``name``
+            File name
+
+         ``path``
+            File path
+
+         ``url``
+            File URL
+
+         ``type``
+            :const:`~const.FILE_TYPE_FILE`
+
+         ``size``
+            File size
+
+         ``mtimt``
+            Last modified time
+
+   .. attribute:: Folder
+
+      A namedtuple reprenting the folder info
+
+      `Fields`:
+
+         ``name``
+            Folder name
+
+         ``path``
+            Folder path
+
+         ``url``
+            Folder URL
+
+         ``type``
+            :const:`~const.FILE_TYPE_FOLDER`
+
+         ``size``
+            Folder size
+
+         ``mtimt``
+            Last modified time
