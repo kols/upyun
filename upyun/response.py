@@ -198,7 +198,7 @@ class LsMixin(object):
         return stuff
 
 
-class UploadedImageResponse(ResponseBase, ImageInfoMixin, FileTypeMixin):
+class PutImageResponse(ResponseBase, ImageInfoMixin, FileTypeMixin):
     pass
 
 

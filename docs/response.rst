@@ -15,7 +15,7 @@ Response
    :private-members:
 .. autoclass:: Response
    :show-inheritance:
-.. autoclass:: UploadedImageResponse
+.. autoclass:: PutImageResponse
    :show-inheritance:
 .. autoclass:: FileInfoResponse
    :show-inheritance:

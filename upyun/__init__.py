@@ -114,12 +114,15 @@ class UpYun(object):
         :param secret: Secret for user to later access the file uploaded
         :param verify: Whether to verify the file integrity using md5 hashing
         :param headers: Additional headers
-        :return: :class:`~response.UploadedImageResponse`
+        :rtype: :class:`~response.Response` or
+                :class:`~response.PutImageResponse`
         """
         url, data, headers = self._prepare_put_request(path, fileo, mkdir,
                 mimetype, secret, verify, headers or {})
         resp = self.session.put(url=url, data=data, headers=headers)
-        return response.UploadedImageResponse(resp, self._get_file_url(path))
+        if self.stype == const.SPACE_TYPE_IMAGE:
+            return response.PutImageResponse(resp, self._get_file_url(path))
+        return response.Response(resp, self._get_file_url(path))
 
     def put_thumbnail(self, path, fileo, version=None, ttype=None, res=None,
             quality=None, sharpen=None, **kwargs):
@@ -135,7 +138,7 @@ class UpYun(object):
         :param sharpen: Whether to sharpen the image
         :type res: tuple
         :type sharpen: bool
-        :return: :class:`~response.UploadedImageResponse`
+        :rtype: :class:`~response.PutImageResponse`
         """
         if not (version or (ttype and res)):
             raise Exception(

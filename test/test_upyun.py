@@ -76,6 +76,11 @@ class UpYunTestCase(unittest.TestCase):
     def test_put_image_space_image(self):
         resp = self._put_image(self.client_image)
         assert resp.success
+        assert isinstance(resp.frames, int)
+        assert isinstance(resp.height, int)
+        assert resp.height > 0
+        assert isinstance(resp.width, int)
+        assert resp.width > 0
 
     def test_put_thumbnail_version(self):
         resp = self.client_image.put_thumbnail(self.REMOTE_PATH_IMG_FILE,
