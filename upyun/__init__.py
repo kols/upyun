@@ -46,7 +46,7 @@ class UpYun(object):
         if api_host in const.UPAIYUN_API_HOSTS:
             self._api_host = api_host
         else:
-            raise
+            raise Exception('api_host: invalid api host')
 
     @property
     def stype(self):
@@ -57,7 +57,7 @@ class UpYun(object):
         if stype in [const.SPACE_TYPE_FILE, const.SPACE_TYPE_IMAGE]:
             self._stype = stype
         else:
-            raise
+            raise Exception('stype: invalid space type')
 
     def _prepare_session(self, auth, ssl):
         if not ssl:
