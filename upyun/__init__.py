@@ -13,11 +13,12 @@ class UpYun(object):
     """Feature complete UpYun REST client
 
     :param str bucket: Your bucket
-    :param stype: The space type, see :ref:`const.rst`
-    :param api_host: API host to use, see :ref:`const.rst`
-    :param tuple auth: Username, passwd tuple
+    :param stype: The space type, :const:`~const.SPACE_TYPE_FILE` or
+                  :const:`~const.SPACE_TYPE_IMAGE`
+    :param api_host: API host to use, see :const:`~const.UPAIYUN_API_HOSTS`
+    :param tuple auth: ``(username, passwd)`` pair
     :param str domain: Your custom domain
-    :param ssl: Whether to use SSL, only a *stub* for now
+    :param bool ssl: Whether to use SSL, only a *stub* for now
 
     Usage::
 
@@ -173,7 +174,7 @@ class UpYun(object):
         """Get a file
 
         :param path: Path of the file to retrieve
-        :return: :class:`~response.GetResponse`
+        :rtype: :class:`~response.GetResponse`
         """
         resp = self.session.get(self._get_url(path))
         return response.GetResponse(resp, self._get_file_url(path))
@@ -222,7 +223,7 @@ class UpYun(object):
     def info(self, path):
         """Retrieve file info
 
-        :rtype: :class:`~response.FileInfoResponse`
+        :rtype: :class:`~response.InfoResponse`
         """
         resp = self.session.head(self._get_url(path))
-        return response.FileInfoResponse(resp, self._get_file_url(path))
+        return response.InfoResponse(resp, self._get_file_url(path))

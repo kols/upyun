@@ -128,8 +128,8 @@ class GetMixin(object):
 
 
 class LsMixin(object):
-    TYPE_FILE = 'N'
-    TYPE_FOLDER = 'F'
+    TYPE_FILE_STR = 'N'
+    TYPE_FOLDER_STR = 'F'
 
     _fields = ['name', 'path', 'url', 'type', 'size', 'mtime']
     File = namedtuple('File', _fields)
@@ -151,11 +151,11 @@ class LsMixin(object):
                     (url_parsed.scheme + '://' + url_parsed.netloc), path)
             mtime = datetime.utcfromtimestamp(int(mtime))
 
-            if type == self.TYPE_FILE:
+            if type == self.TYPE_FILE_STR:
                 f = self.File(name=name, path=path, url=url,
                         type=const.FILE_TYPE_FILE, size=int(size), mtime=mtime)
                 self._files[name] = f
-            elif type == self.TYPE_FOLDER:
+            elif type == self.TYPE_FOLDER_STR:
                 f = self.File(name=name, path=path, url=url,
                         type=const.FILE_TYPE_FILE, size=int(size), mtime=mtime)
                 self._folders[name] = f
@@ -202,7 +202,7 @@ class PutImageResponse(ResponseBase, ImageInfoMixin, FileTypeMixin):
     pass
 
 
-class FileInfoResponse(ResponseBase, FileInfoMixin, FileTypeMixin):
+class InfoResponse(ResponseBase, FileInfoMixin, FileTypeMixin):
     pass
 
 

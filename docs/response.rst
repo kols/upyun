@@ -17,7 +17,7 @@ Response
    :show-inheritance:
 .. autoclass:: PutImageResponse
    :show-inheritance:
-.. autoclass:: FileInfoResponse
+.. autoclass:: InfoResponse
    :show-inheritance:
 .. autoclass:: UsageResponse
    :show-inheritance:
