@@ -164,7 +164,7 @@ class LsMixin(object):
     def files(self):
         """Files in the directory
 
-        Key is the folder name, value is :class:`~LsMixin.Folder`
+        Key is the file name, value is :class:`~LsMixin.Folder`
 
         :rtype: :class:`dict`
         """
@@ -176,7 +176,7 @@ class LsMixin(object):
     def folders(self):
         """Folders in the directory
 
-        Key is the file name, value is :class:`~LsMixin.File`
+        Key is the folder name, value is :class:`~LsMixin.File`
 
         :rtype: :class:`dict`
         """

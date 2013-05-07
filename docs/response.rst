@@ -41,9 +41,11 @@ Mixin
 .. autoclass:: GetMixin
    :members:
 .. autoclass:: LsMixin
-   :members: files, folders, stuffs
 
-   .. attribute:: File
+   .. autoattribute:: files
+   .. autoattribute:: folders
+   .. autoattribute:: stuffs
+   .. class:: upyun.response.LsMixin.File
 
       A namedtuple reprenting the file info
 
@@ -67,7 +69,7 @@ Mixin
          ``mtimt``
             Last modified time
 
-   .. attribute:: Folder
+   .. class:: upyun.response.LsMixin.Folder
 
       A namedtuple reprenting the folder info
 
