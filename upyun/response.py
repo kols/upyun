@@ -19,13 +19,14 @@ class ResponseBase(object):
     :param str url: URL of the file on the UpYun
     """
     def __init__(self, response, url):
-        #: Response from UpYun
+        #: Raw :class:`requests.Response` from UpYun
         self.response = response
 
         #: URL of the file on the UpYun
         self.url = url
 
-        #: (Optional) Error of the request
+        #: Error of the request, a :class:`tuple` in the form of
+        #: ``(<status code>, <error message>)``
         self.error = self._populate_error()
 
     def _get_header_with_prefix(self, name):
@@ -47,7 +48,7 @@ class ImageInfoMixin(object):
         """
         Width of the image
 
-        :rtype: int or None
+        :rtype: :class:`int` or :class:`None`
         """
         w = self._get_header_with_prefix('width')
         return int(w) if w else None
@@ -57,7 +58,7 @@ class ImageInfoMixin(object):
         """
         Height of the image
 
-        :rtype: int or None
+        :rtype: :class:`int` or :class:`None`
         """
         h = self._get_header_with_prefix('height')
         return int(h) if h else None
@@ -67,7 +68,7 @@ class ImageInfoMixin(object):
         """
         Frames of the image
 
-        :rtype: int or None
+        :rtype: :class:`int` or :class:`None`
         """
         f = self._get_header_with_prefix('frames')
         return int(f) if f else None
@@ -78,7 +79,7 @@ class FileInfoMixin(object):
     def date(self):
         """File created date
 
-        :rtype: datetime.datetime
+        :rtype: :class:`datetime.datetime` or :class:`None`
         """
         d = self._get_header_with_prefix('file-date')
         return datetime.utcfromtimestamp(int(d)) if d else None
@@ -87,7 +88,7 @@ class FileInfoMixin(object):
     def size(self):
         """File size
 
-        :rtype: int or None
+        :rtype: :class:`int` or :class:`None`
         """
         s = self._get_header_with_prefix('file-size')
         return int(s) if s else None
@@ -98,7 +99,7 @@ class UsageMixin(object):
     def usage(self):
         """Usage of the space in bytes
 
-        :rtype: int
+        :rtype: :class:`int` or :class:`None`
         """
         return int(self.response.text) if self.response.text else None
 
@@ -108,7 +109,7 @@ class FileTypeMixin(object):
     def type(self):
         """File type of the queried path
 
-        :return: one of ['file', 'folder']
+        :const:`~const.FILE_TYPE_FILE` or :const:`~const.FILE_TYPE_FOLDER`
         """
         ft = self._get_header_with_prefix('file-type')
         if ft:
@@ -122,10 +123,7 @@ class FileTypeMixin(object):
 class GetMixin(object):
     @property
     def data(self):
-        """Data of the downloaded file
-
-        :rtype: file
-        """
+        """Data of the downloaded file"""
         return self.response.content
 
 

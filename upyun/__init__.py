@@ -179,7 +179,7 @@ class UpYun(object):
         """Delete a file or an empty folder
 
         :param path: Path of the file or folder to delete
-        :return: :class:`~response.Response`
+        :rtype: :class:`~response.Response`
         """
         resp = self.session.delete(self._get_url(path))
         return response.Response(resp, None)
@@ -189,7 +189,7 @@ class UpYun(object):
 
         :param dirname: Folder name
         :param mk_parent: Whether to create the parent folder if not existed
-        :return: :class:`~response.Response`
+        :rtype: :class:`~response.Response`
         """
         url = self._get_url(dirname)
         headers = {}
@@ -211,7 +211,7 @@ class UpYun(object):
     def usage(self):
         """Retrieve the space usage info
 
-        :return: :class:`~response.UsageResponse`
+        :rtype: :class:`~response.UsageResponse`
         """
         resp = self.session.get(self._get_url(''), params='usage')
         return response.UsageResponse(resp, None)
@@ -219,7 +219,7 @@ class UpYun(object):
     def info(self, path):
         """Retrieve file info
 
-        :return: :class:`~response.FileInfoResponse`
+        :rtype: :class:`~response.FileInfoResponse`
         """
         resp = self.session.head(self._get_url(path))
         return response.FileInfoResponse(resp, self._get_file_url(path))
