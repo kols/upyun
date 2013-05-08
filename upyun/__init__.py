@@ -4,6 +4,7 @@ from urllib import pathname2url
 from urlparse import urljoin
 
 import requests
+from requests.auth import AuthBase
 
 from . import const, response
 from .auth import UpYunDigestAuthentication
@@ -66,7 +67,10 @@ class UpYun(object):
             raise Exception('stype: invalid space type')
 
     def _prepare_session(self, auth, ssl):
-        self._auth = auth if ssl else UpYunDigestAuthentication(*auth)
+        if isinstance(auth, AuthBase):
+            self._auth = auth
+        else:
+            self._auth = auth if ssl else UpYunDigestAuthentication(*auth)
         s = requests.Session()
         s.auth = self._auth
         return s
