@@ -20,19 +20,21 @@ class UpYun(object):
     """Feature complete UpYun REST client
 
     :param str bucket: Your bucket
+    :param auth: ``(username, passwd)`` pair or any object derived from
+                 :class:`requests.auth.AuthBase`
     :param stype: The space type, :const:`~const.SPACE_TYPE_FILE` or
                   :const:`~const.SPACE_TYPE_IMAGE`
     :param api_host: API host to use, see :ref:`API Hosts <api-hosts>`
-    :param tuple auth: ``(username, passwd)`` pair
     :param str domain: Your custom domain
     :param bool ssl: Whether to use SSL
 
     Usage::
 
-        client = UpYun('test', const.SPACE_TYPE_FILE, const.API_HOST_AUTO, ('user', 'pass'))
+        client = UpYun('test', ('user', 'pass'), const.SPACE_TYPE_FILE)
         client.put('/test.txt', open('/tmp/test.txt'))
     """
-    def __init__(self, bucket, stype, api_host, auth, domain=None, ssl=False):
+    def __init__(self, bucket, auth, stype, api_host=const.API_HOST_AUTO,
+            domain=None, ssl=False):
         self.bucket = bucket
         self.stype = stype
         self.api_host = api_host

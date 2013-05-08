@@ -34,10 +34,10 @@ class UpYunTestCase(unittest.TestCase):
             os.path.join(REMOTE_DIR, 'upyun-test.gif'))
 
     def setUp(self):
-        self.client_file = UpYun(self.BUCKET_FILE, const.SPACE_TYPE_FILE,
-                const.API_HOST_AUTO, (self.USERNAME, self.PASSWD))
-        self.client_image = UpYun(self.BUCKET_IMAGE, const.SPACE_TYPE_IMAGE,
-                const.API_HOST_AUTO, (self.USERNAME, self.PASSWD))
+        self.client_file = UpYun(self.BUCKET_FILE,
+                (self.USERNAME, self.PASSWD), const.SPACE_TYPE_FILE)
+        self.client_image = UpYun(self.BUCKET_IMAGE,
+                (self.USERNAME, self.PASSWD), const.SPACE_TYPE_IMAGE)
         self.test_file_txt = open(self.LOCAL_PATH_TXT_FILE)
         self.test_file_img = open(self.LOCAL_PATH_IMG_FILE, 'rb')
 
