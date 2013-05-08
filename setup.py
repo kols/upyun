@@ -1,8 +1,4 @@
 #!/usr/bin/env python
-
-import os
-import sys
-
 import upyun
 
 try:
@@ -10,12 +6,8 @@ try:
 except ImportError:
     from distutils.core import setup
 
-if sys.argv[-1] == 'publish':
-    os.system('python setup.py sdist upload')
-    sys.exit()
-
 setup(
-    name='requests',
+    name=upyun.__title__,
     version=upyun.__version__,
     description='Feature complete upyun REST client',
     author='Kane Dou',

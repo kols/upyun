@@ -8,6 +8,12 @@ import requests
 from . import const, response
 from .auth import UpYunDigestAuthentication
 
+__title__ = 'upyun'
+__version__ = '0.1'
+__author__ = 'Kane Dou'
+__license__ = 'Apache 2.0'
+__copyright__ = 'Copyright 2013 Kane Dou'
+
 
 class UpYun(object):
     """Feature complete UpYun REST client
