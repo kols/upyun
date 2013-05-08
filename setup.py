@@ -10,6 +10,7 @@ setup(
     name=upyun.__title__,
     version=upyun.__version__,
     description='Feature complete upyun REST client',
+    long_description=open('README.md').read(),
     author='Kane Dou',
     author_email='douqilong@gmail.com',
     url='https://github.com/kols/upyun',
