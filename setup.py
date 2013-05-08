@@ -18,7 +18,6 @@ setup(
     package_dir={'upyun': 'upyun'},
     include_package_data=True,
     install_requires=['requests'],
-    setup_requires=['sphinx'],
     license=open('LICENSE').read(),
     classifiers=(
         'Development Status :: 5 - Production/Stable',

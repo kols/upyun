@@ -7,7 +7,7 @@ dist:
 	python setup.py sdist
 
 publish: dist
-	python setup.py upload
+	python setup.py sdist upload
 
 test:
 	py.test -v
