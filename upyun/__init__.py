@@ -24,7 +24,7 @@ class UpYun(object):
     :param api_host: API host to use, see :ref:`API Hosts <api-hosts>`
     :param tuple auth: ``(username, passwd)`` pair
     :param str domain: Your custom domain
-    :param bool ssl: Whether to use SSL, only a *stub* for now
+    :param bool ssl: Whether to use SSL
 
     Usage::
 
@@ -66,8 +66,7 @@ class UpYun(object):
             raise Exception('stype: invalid space type')
 
     def _prepare_session(self, auth, ssl):
-        if not ssl:
-            self._auth = UpYunDigestAuthentication(*auth)
+        self._auth = auth if ssl else UpYunDigestAuthentication(*auth)
         s = requests.Session()
         s.auth = self._auth
         return s
