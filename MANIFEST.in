@@ -1,1 +1,1 @@
-include LICENSE test/asset/* requirements.txt README.md
+include LICENSE test/asset/* requirements.txt README.rst
