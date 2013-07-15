@@ -1,14 +1,12 @@
 #!/usr/bin/env python
-import upyun
-
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
 setup(
-    name=upyun.__title__,
-    version=upyun.__version__,
+    name='pyupyun',
+    version='0.1',
     description='Feature complete upyun REST client',
     long_description=open('README.rst').read(),
     author='Kane Dou',

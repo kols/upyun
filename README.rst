@@ -1,5 +1,5 @@
-upyun - Feature complete upyun REST client
-==========================================
+pyupyun - Feature complete upyun REST client
+===
 
 .. code-block:: pycon
 
@@ -18,12 +18,12 @@ Installation
 
 .. code-block:: bash
 
-    $ pip install upyun
+    $ pip install pyupyun
 
 Documentation
 -------------
 
-http://upyun.rtfd.org
+https://pyupyun.readthedocs.org
 
 Test
 ----
