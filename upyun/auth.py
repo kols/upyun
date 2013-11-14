@@ -17,8 +17,9 @@ class UpYunDigestAuthentication(AuthBase):
         self.passwd_digest = hashlib.md5(passwd).hexdigest()
 
     def _get_content_length(self, r):
-        if r.headers['content-length'] is not None:
-            return int(r.headers['content-length'])
+        cont_len = r.headers.get('content-length', None)
+        if cont_len is not None:
+            return int(cont_len)
         try:
             return len(r.body)
         except (AttributeError, TypeError):

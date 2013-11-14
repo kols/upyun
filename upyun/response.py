@@ -197,7 +197,7 @@ class LsMixin(object):
         stuffs = {}
         stuffs.update(self.files)
         stuffs.update(self.folders)
-        return stuff
+        return stuffs
 
 
 class PutImageResponse(ResponseBase, ImageInfoMixin, FileTypeMixin):
