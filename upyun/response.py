@@ -139,26 +139,28 @@ class LsMixin(object):
         self._folders = {}
 
         for l in self.response.content.strip().split("\n"):
-            name, type, size, mtime = l.strip().split("\t")
+            l = l.strip()
+            if l:
+                name, type, size, mtime = l.split("\t")
 
-            name = unicode(name, 'utf-8')
-            type = type.upper()
-            url_parsed = urlparse.urlparse(self.url)
-            folder_path = url_parsed.path
+                name = unicode(name, 'utf-8')
+                type = type.upper()
+                url_parsed = urlparse.urlparse(self.url)
+                folder_path = url_parsed.path
 
-            path = urlparse.urljoin(folder_path, name)
-            url = urlparse.urljoin(
-                    (url_parsed.scheme + '://' + url_parsed.netloc), path)
-            mtime = datetime.utcfromtimestamp(float(mtime))
+                path = os.path.join(folder_path, name)
+                url = urlparse.urljoin(
+                        (url_parsed.scheme + '://' + url_parsed.netloc), path)
+                mtime = datetime.utcfromtimestamp(float(mtime))
 
-            if type == self.TYPE_FILE_STR:
-                f = self.FileInfo(name=name, path=path, url=url,
-                        type=const.FILE_TYPE_FILE, size=int(size), mtime=mtime)
-                self._files[name] = f
-            elif type == self.TYPE_FOLDER_STR:
-                f = self.FileInfo(name=name, path=path, url=url,
-                        type=const.FILE_TYPE_FOLDER, size=int(size), mtime=mtime)
-                self._folders[name] = f
+                if type == self.TYPE_FILE_STR:
+                    f = self.FileInfo(name=name, path=path, url=url,
+                            type=const.FILE_TYPE_FILE, size=int(size), mtime=mtime)
+                    self._files[name] = f
+                elif type == self.TYPE_FOLDER_STR:
+                    f = self.FileInfo(name=name, path=path, url=url,
+                            type=const.FILE_TYPE_FOLDER, size=int(size), mtime=mtime)
+                    self._folders[name] = f
 
     @property
     def files(self):

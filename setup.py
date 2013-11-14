@@ -6,7 +6,7 @@ except ImportError:
 
 setup(
     name='pyupyun',
-    version='0.1.2',
+    version='0.1.3',
     description='Feature complete upyun REST client',
     long_description=open('README.rst').read(),
     author='Kane Dou',
