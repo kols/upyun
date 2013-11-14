@@ -139,16 +139,17 @@ class LsMixin(object):
         self._folders = {}
 
         for l in self.response.content.strip().split("\n"):
-            name, type, size, mtime = l.strip().split()
+            name, type, size, mtime = l.strip().split("\t")
 
+            name = unicode(name, 'utf-8')
             type = type.upper()
             url_parsed = urlparse.urlparse(self.url)
             folder_path = url_parsed.path
 
-            path = urllib.pathname2url(os.path.join(folder_path, name))
+            path = urlparse.urljoin(folder_path, name)
             url = urlparse.urljoin(
                     (url_parsed.scheme + '://' + url_parsed.netloc), path)
-            mtime = datetime.utcfromtimestamp(int(mtime))
+            mtime = datetime.utcfromtimestamp(float(mtime))
 
             if type == self.TYPE_FILE_STR:
                 f = self.FileInfo(name=name, path=path, url=url,
